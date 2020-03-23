@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel='stylesheet' href='page_css.css'>
 	<title> Student's Hangout </title>
+	<script src='dropdown.js'></script>
 	<script type='text/javascript'>
 		function sec() {
 			var f_search=document.f1.search.value;
@@ -30,11 +32,43 @@
 			<!--Nav_Tabs-->
 			<tr align='center' bgcolor='lightgrey' class='td_bor'>
 				<td width='5%'> <?php Session_start(); if(IsSet($_SESSION["user_id"])) {echo "<a href='user_page.php'>"; } else {echo "<a href='home.php'>";}?>Home </a></td>
-				<td width='5%'> <a href='send_message.php'>Send Message </a></td>
-				<td width='5%'> <a href='inbox.php'>Inbox (Only Recent Message) </a></td>
-				<td width='5%'> <a href='view_profile.php'>View Profile </a></td>
-				<td width='5%'> <a href='signout.php'>Signout </a></td>
-
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Messages</button>
+						<div id='myDropdown' class='dropdown-content'>
+							<a href='send_message.php'>Send Message </a>
+							<a href='inbox.php'>Inbox (Only Recent Message) </a>
+						</div>
+					</div>
+				</td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Friends</button>
+						<div class="dropdown-content">
+							<a href='friend_list.php'>Friend List</a>
+							<a href='friends.php'>Search Friends </a></td>
+						</div>
+					</div>
+				</td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Post</button>
+						<div class="dropdown-content">
+							<a href='update_status.php'> Status Update</a>
+							<a href='upload_photo.php'> Upload Photos </a>
+							<a href='photo_gallery.php'> Photo Gallery</a></td>
+						</div>
+					</div>
+				</td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Settings</button>
+						<div class="dropdown-content">
+							<a href='view_profile.php'>View Profile </a>
+							<a href='signout.php'>Signout </a></td>
+						</div>
+					</div>
+				</td>
 			</tr>
 			
 			<tr>
@@ -53,7 +87,7 @@
 								<td> Search Friend:- </td> <td> <input type='text' name='search' maxlength='50'> </td> <td> <span id='s1'> </span> </td> <td> <span id='s2'> </span> </td>
 							</tr>
 							<tr>
-								<td colspan='4' align='center'> <br> <input type='button' value='Search' onclick='sec()'> </td>
+								<td colspan='4' align='center'> <br> <input type='button' class='btn btn-primary' value='Search' onclick='sec()'> </td>
 							</tr>
 						</table>
 					</form>
@@ -63,7 +97,7 @@
 				
 			
 			<?php
-			$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
+			$config=parse_ini_file('./private/config.ini');
 			if(IsSet($_SESSION["user_id"])) {
 					$id=$_SESSION["user_id"];
 					$query="select friend_name,friend_id from friends where receiver_id=".$id." and status=0 and comp=0";
@@ -92,7 +126,7 @@
 						
 						if($f<2)
 						{
-							echo "<tr align='center'> <td colspan='5'><font color='lightblue'> No Friend Requests!</font> </td> </tr>";
+							echo "<tr align='center'> <td colspan='5'><font color=#904C77> No Friend Requests!</font> </td> </tr>";
 						}
 						
 						MySQLi_Close($resid);	

@@ -1,16 +1,15 @@
 <?php
-Session_Start();
-if(IsSet($_SESSION["user_id"])) {
-	$recv_id=$_POST["h1"];
-	$recv_name=$_POST["h2"];
-	$frnd_id=$_SESSION["user_id"];
-	$frnd_name=$_SESSION["name"];
+	$config=parse_ini_file('./private/config.ini');
+	Session_Start();
+	if(IsSet($_SESSION["user_id"])) {
+		$recv_id=$_POST["h1"];
+		$recv_name=$_POST["h2"];
+		$frnd_id=$_SESSION["user_id"];
+		$frnd_name=$_SESSION["name"];
 
-
-
-	$resid=MySQLi_Connect('localhost','abecket3','Sy!veon369852','abecket3');
-	if(MySQLi_Connect_Errno()) {
-		echo "<tr align='center'> <td colspan='5'> Failed to connect to MySQL </td> </tr>";
+		$resid=MySQLi_Connect($config['servername'],$config['username'],$config['password'],$config['dbname']);
+		if(MySQLi_Connect_Errno()) {
+			echo "<tr align='center'> <td colspan='5'> Failed to connect to MySQL </td> </tr>";
 		}
 		else {
 			$count=MySQLi_Query($resid,"select (max(id)+1) as count from friends");
@@ -24,23 +23,24 @@ if(IsSet($_SESSION["user_id"])) {
 			}
 			
 			$res=MySQLi_Query($resid,$query);
-			
+				
 			if($res) {
-		     echo "Successful!";
+			 echo "Successful!";
 			}
 			else {
 				 echo "Failed!";
+					 
 			}
-				MySQLi_Close($resid);
+			
+			MySQLi_Close($resid);
 		}
 	}
-}
-					
-if(IsSet($_SESSION['user_id'])) {
-	Header("Location: friends.php");
-}
-else {
-	Header("Location: home.php");
-}
+						
+	if(IsSet($_SESSION['user_id'])) {
+		Header("Location: friends.php");
+	}
+	else {
+		Header("Location: home.php");
+	}
 ?>
 

@@ -6,12 +6,14 @@
 	<title> Student's Hangout </title>
 	
 	<script src='jquery.js'></script>
+	<script src='dropdown.js'></script>
 	<script type='text/javascript'>
 	$(document).ready(function() 
 	{
 		$("#sam").hide(2000);
 	});
 	</script>
+	<style>.show {display:block;}</style>
 </head>
 <body>
 		<table cellpadding='3' cellspacing='3' class='tab_main'>
@@ -22,11 +24,43 @@
 			<!--Nav_Tabs-->
 			<tr align='center' bgcolor='lightgrey' class='td_bor'>
 				<td width='5%'> <?php Session_start(); if(IsSet($_SESSION["user_id"])) {echo "<a href='user_page.php'>"; } else {echo "<a href='home.php'>";}?>Home </a></td>
-				<td width='5%'> <a href='send_message.php'>Send Message </a></td>
-				<td width='5%'> <a href='inbox.php'>Inbox (Only Recent Message) </a></td>
-				<td width='5%'> <a href='view_profile.php'>View Profile </a></td>
-				<td width='5%'> <a href='signout.php'>Signout </a></td>
-
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Messages</button>
+						<div id='myDropdown' class='dropdown-content'>
+							<a href='send_message.php'>Send Message </a>
+							<a href='inbox.php'>Inbox (Only Recent Message) </a>
+						</div>
+					</div>
+				</td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Friends</button>
+						<div class="dropdown-content">
+							<a href='friend_list.php'>Friend List</a>
+							<a href='friends.php'>Search Friends </a></td>
+						</div>
+					</div>
+				</td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Post</button>
+						<div class="dropdown-content">
+							<a href='update_status.php'> Status Update</a>
+							<a href='upload_photo.php'> Upload Photos </a>
+							<a href='photo_gallery.php'> Photo Gallery</a></td>
+						</div>
+					</div>
+				</td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Settings</button>
+						<div class="dropdown-content">
+							<a href='view_profile.php'>View Profile </a>
+							<a href='signout.php'>Signout </a></td>
+						</div>
+					</div>
+				</td>
 			</tr>
 			
 			<tr>
@@ -93,20 +127,7 @@
 							</script>
 						<!--echo "<tr align='center' id='sam'> <td colspan='5'> <font color='green'>Login Successful, ".$_SESSION["name"]."! </font> </td> </tr>"; -->
 						<?php }
-						echo "<tr> 
-						<td width='5%' valign='top'> 
-							<table>
-								<tr align='center' bgcolor='lightgrey' class='td_bor'>
-									<td width='5%'> <a href='friends.php'>Friends </a></td> </tr>
-								<tr align='center' bgcolor='lightgrey' class='td_bor'> 
-									<td width='5%'> <a href='update_status.php'> Status Update </td> </tr>
-								<tr align='center' bgcolor='lightgrey' class='td_bor'>
-									<td width='5%'> <a href='friend_list.php'>Friend List</a></td></tr>
-							</table>
-						</td>
-				
-				<td colspan='4'>";
-				
+											
 						echo "<table  cellpadding='4' cellspacing='5' width='100%' style='table-layout:fixed'> <col width='100%'> <tr align='centre'> <th> <h3> Updates from your Friends: </h3> </th> </tr> ";
 				
 						$count = MySQLi_Query($resid,"select frnd_two_id from are_friends where frnd_one_id = $user_here union select frnd_one_id from are_friends where frnd_two_id = $user_here");

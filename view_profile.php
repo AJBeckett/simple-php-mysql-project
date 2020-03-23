@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel='stylesheet' href='page_css.css'>
 	<title> Student's Hangout </title>
+	<script src='dropdown.js'></script>
 </head>
 <body>
 		<table cellpadding='3' cellspacing='3' class='tab_main'>
@@ -13,8 +15,24 @@
 			<!--Nav_Tabs-->
 			<tr align='center' bgcolor='lightgrey' class='td_bor'>
 				<td width='5%'> <?php Session_start(); if(IsSet($_SESSION["user_id"])) {echo "<a href='user_page.php'>"; } else {echo "<a href='home.php'>";}?>Home </a></td>
-				<td width='5%'> <a href='send_message.php'>Send Message </a></td>
-				<td width='5%'> <a href='inbox.php'>Inbox (Only Recent Message) </a></td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Messages</button>
+						<div id='myDropdown' class='dropdown-content'>
+							<a href='send_message.php'>Send Message </a>
+							<a href='inbox.php'>Inbox (Only Recent Message) </a>
+						</div>
+					</div>
+				</td>
+				<td width='5%'> 
+					<div class='dropdown'>
+						<button onClick='dropDown()' class='dropbtn'>Friends</button>
+						<div class="dropdown-content">
+							<a href='friend_list.php'>Friend List</a>
+							<a href='friends.php'>Search Friends </a></td>
+						</div>
+					</div>
+				</td>
 				<td width='5%'> <a href='view_profile.php'>View Profile </a></td>
 				<td width='5%'> <a href='signout.php'>Signout </a></td>
 
@@ -32,16 +50,24 @@
 			//Session_start();
 			if(IsSet($_SESSION["user_id"])) {
 						echo "<tr> <td colspan='5' align='center'> <table align='center'>
-							<tr  align='center'>
-								<td align='right'>Name:- </td> <td align='left'>".$_SESSION["name"]." </td> </tr> 
+								<tr  align='center'>
+									<td align='right'>Name:- </td> 
+									<td align='left'>".$_SESSION["name"]." </td> 
+								</tr> 
 								<tr align='center'>
-									<td align='right'>Email:- </td> <td align='left'>".$_SESSION["email"]." </td> </tr>
-									<tr align='center'>
-										<td align='right'>Gender:- </td> <td align='left'>".$_SESSION["gender"]."</td> </tr>
-										<tr align='center'>
-											<td align='right'>Age:- </td> <td align='left'>".$_SESSION["age"]."  </td> </tr>
-											<tr align='center'>
-												<td align='right'>Password:- </td> <td align='left'>".$_SESSION["password"]."  </td> </tr> </table> </td> </tr>";
+									<td align='right'>Email:- </td> 
+									<td align='left'>".$_SESSION["email"]." </td> 
+								</tr>
+								<tr align='center'>
+									<td align='right'>Gender:- </td> 
+									<td align='left'>".$_SESSION["gender"]."</td> 
+								</tr>
+								<tr align='center'>
+									<td align='right'>Age:- </td> 
+									<td align='left'>".$_SESSION["age"]."  </td> 
+									</tr>
+								
+								</table> </td> </tr>";
 								
 					}
 			else {

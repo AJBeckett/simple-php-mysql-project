@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel='stylesheet' href='page_css.css'>
 	<title> Student's Hangout </title>
 		<script type='text/javascript'>
@@ -87,7 +88,7 @@
 							</tr>
 							
 							<tr>
-								<td> <br> <input type='button' value='Login' name='s1' onclick='sec()'> </td> <td> <br> OR <a href='secure_signup.php'>Sign-up</a></td> 
+								<td> <br> <input type='button' class='btn btn-primary' value='Login' name='s1' onclick='sec()'></td><td><a href='secure_signup.php'>Sign-up</a></td><td><a href='recover_password.php'>Forgot my Password</a></td> 
 							</tr>
 						</table>
 					</form>
