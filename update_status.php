@@ -76,7 +76,7 @@
 </tr>
 		<!-- Updating status -->
 		<?php
-		
+		$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
 		if($_SERVER["REQUEST_METHOD"]=="POST") {
 		$status = $_POST["status"];
 		//$status = trim("$_POST['status']");
@@ -109,7 +109,7 @@
 		?>
 		
 		<?php
-		
+		$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
 		if($_SESSION['user_id']) {
 			$user_id = $_SESSION['user_id'];
 			include 'mysql.php';
@@ -144,7 +144,7 @@
 			?>
 		</table>
 			<footer align='center'>
-			&copy; All Rights Reserved.	
+			&copy; All Rights Reserved.	https://github.com/abhn/simple-php-mysql-project
 			</footer>
 </body>
 </html>		

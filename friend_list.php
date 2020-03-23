@@ -28,7 +28,7 @@
 				<td> <hr> </td> 
 			</tr>
 <?php
-
+$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
 	$user_id = $_SESSION["user_id"];
 	include 'mysql.php';
 	if($resid) {
@@ -67,7 +67,7 @@
 ?>
 		</table>
 			<footer align='center'>
-			&copy; All Rights Reserved.	
+			&copy; All Rights Reserved.	https://github.com/abhn/simple-php-mysql-project
 			</footer>
 </body>
 </html>		

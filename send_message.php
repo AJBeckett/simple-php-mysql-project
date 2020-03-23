@@ -91,7 +91,7 @@
 			</tr>
 			
 			<?php
-				
+			$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
 				if($_SERVER["REQUEST_METHOD"]=="POST") {
 				$email=$text="";
 				function sec($data) {
@@ -102,7 +102,7 @@
 				}
 				$email=sec($_POST["n1"]);
 				$text=sec($_POST["t1"]);
-				$resid=MySQLi_Connect('localhost','root','@connectme','shangout');
+				$resid=MySQLi_Connect($config['servername'],$config['username'],$config['password'],$config['dbname']);
 					if(MySQLi_Connect_Errno()) {
 						echo "<tr align='center'> <td colspan='5'> Failed to connect to MySQL </td> </tr>";
 					}
@@ -158,7 +158,7 @@
 			?>
 		</table>
 			<footer align='center'>
-			&copy; All Rights Reserved.	
+			&copy; All Rights Reserved.	https://github.com/abhn/simple-php-mysql-project
 			</footer>
 </body>
 </html>

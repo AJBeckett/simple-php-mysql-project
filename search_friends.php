@@ -30,6 +30,7 @@
 			
 			<?php
 			//Session_start(); 
+			$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
 				if(IsSet($_SESSION["user_id"])) {
 				if(IsSet($_POST["search"])) {
 					$name=$_POST["search"];
@@ -37,13 +38,13 @@
 					
 					//MySQL++
 						
-					$res_id=MySQLi_Connect('localhost','root','@connectme','shangout');
+					$resid=MySQLi_Connect($config['servername'],$config['username'],$config['password'],$config['dbname']);
 				
 					if(MySQLi_Connect_Errno()) {
 						echo "<tr align='center'> <td colspan='5'> Failed to connect to MySQL </td> </tr>";
 					}
 					else {
-						$result=MySQLi_Query($res_id,$query);
+						$result=MySQLi_Query($resid,$query);
 						if($result==true) {
 							$f=1;
 							while(($rows=MySQLi_Fetch_Row($result))==True) {
@@ -53,7 +54,7 @@
 							}
 							//START:- Exclude if already request is sent;
 							$query4="select status, comp from friends where id=(select max(id) from friends where receiver_id=".$rows[0]." and friend_id=".$_SESSION["user_id"].")"; 
-							$result4=MySQLi_Query($res_id,$query4);
+							$result4=MySQLi_Query($resid,$query4);
 							if($result4==true) {
 								$res4=MySQLi_Fetch_Row($result4);
 							}
@@ -73,8 +74,8 @@
 							$query2="select status from are_friends where frnd_one_id=".$_SESSION["user_id"]." and frnd_two_id=".$rows[0]."";
 							$query3="select status from are_friends where frnd_one_id=".$rows[0]." and frnd_two_id=".$_SESSION["user_id"]."";
 							
-							$result2=MySQLi_Query($res_id,$query2);
-							$result3=MySQLi_Query($res_id,$query3);
+							$result2=MySQLi_Query($resid,$query2);
+							$result3=MySQLi_Query($resid,$query3);
 							
 							if($result2==true) {
 								$res2=MySQLi_Fetch_Row($result2);
@@ -110,7 +111,7 @@
 							echo "<tr align='center'> <td colspan='5'><font color='lightblue'> No such Friends!</font> </td> </tr>";
 						}
 						
-						MySQLi_Close($res_id);	
+						MySQLi_Close($resid);	
 					}
 					
 					//MySQL++
@@ -125,7 +126,7 @@
 			?>
 		</table>
 		<footer align='center'>
-			&copy; All Rights Reserved.	
+			&copy; All Rights Reserved.	https://github.com/abhn/simple-php-mysql-project
 			</footer>
 			
 </body>

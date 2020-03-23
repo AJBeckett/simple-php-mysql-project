@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel='stylesheet' href='page_css.css'>
 	<title> Student's Hangout </title>
 	<script type='text/javascript'>
@@ -112,14 +113,14 @@
 							</tr>
 							
 							<tr>
-								<td> <br> <input type='button' value='Sign-up' name='s1' onclick='sec()'> </td> <td> <br> OR  <a href='login.php'>Login</a></td>
+								<td> <br> <input type='button' class="btn btn-pr" value='Sign-up' name='s1' onclick='sec()'> </td> <td> <br> OR  <a href='login.php'>Login</a></td>
 							</tr>
 						</table>
 					</form>
 				</td>
 			</tr>
 	<?php
-	
+	$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
 	$name=$email=$age=$gender=$password=$count=$count_id="";
 	if($_SERVER["REQUEST_METHOD"]=="POST") {
 		function sec($data) {
@@ -137,12 +138,12 @@
 			//$query="INSERT INTO studs VALUES('$name','$email',$age);";
 		//MySQL Magic :D
 			//Getting Resource ID
-			$res_id=MySQLi_Connect('localhost','root','@connectme','shangout');
+			$resid=MySQLi_Connect($config['servername'],$config['username'],$config['password'],$config['dbname']);
 			if(MySQLi_Connect_Errno()) {
 				echo "<tr align='center'> <td colspan='5'> Failed to connect to MySQL </td> </tr>";
 			}
 			else {
-			$check_email=MySQLi_Query($res_id,"select name from students where email='".$email."'");
+			$check_email=MySQLi_Query($resid,"select name from students where email='".$email."'");
 			$r_email=MySQLi_Fetch_Row($check_email);
 			
 			if($r_email) {
@@ -150,7 +151,7 @@
 			}
 			
 			else {
-			$count=MySQLi_Query($res_id,"select (max(id)+1) as count  from students");
+			$count=MySQLi_Query($resid,"select (max(id)+1) as count  from students");
 			$count_id=MySQLi_Fetch_Assoc($count);
 			if($count_id["count"]) {
 				$query="insert into students values (".$count_id["count"].",'$name','$email',$age,'$gender','$password')";
@@ -158,7 +159,7 @@
 			else {
 				$query="insert into students values (1,'$name','$email',$age,'$gender','$password')";
 			}
-			$res=MySQLi_Query($res_id,$query);
+			$res=MySQLi_Query($resid,$query);
 			if($res) {
 			echo "<tr align='center'> <td colspan='5'> <font color='green'> Registration Successful! </font> You may login now from here:- <a href='login.php'>Login</a></td> </tr>";
 			}
@@ -166,7 +167,7 @@
 				echo "<tr align='center'> <td colspan='5'> <font color='red'> Registration Failed! </font> </td> </tr>";
 			}
 			}
-			MySQLi_Close($res_id);
+			MySQLi_Close($resid);
 			}
 			
 			
@@ -175,7 +176,7 @@
 	?> 			
 		</table>
 			<footer align='center'>
-			&copy; All Rights Reserved.	
+			&copy; All Rights Reserved.	https://github.com/abhn/simple-php-mysql-project
 			</footer>
 </body>
 </html>

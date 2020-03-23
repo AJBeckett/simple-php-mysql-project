@@ -63,16 +63,17 @@
 				
 			
 			<?php
+			$config=parse_ini_file('/home/abecket3/public_html/Assign4b/private/config.ini');
 			if(IsSet($_SESSION["user_id"])) {
 					$id=$_SESSION["user_id"];
 					$query="select friend_name,friend_id from friends where receiver_id=".$id." and status=0 and comp=0";
-					$res_id=MySQLi_Connect('localhost','root','@connectme','shangout');
+					$resid=MySQLi_Connect($config['servername'],$config['username'],$config['password'],$config['dbname']);
 				
 					if(MySQLi_Connect_Errno()) {
 						echo "<tr align='center'> <td colspan='5'> Failed to connect to MySQL </td> </tr>";
 					}
 					else {
-						$result=MySQLi_Query($res_id,$query);
+						$result=MySQLi_Query($resid,$query);
 						if($result==true) {
 							$f=1;
 							while(($rows=MySQLi_Fetch_Row($result))==True) {
@@ -94,7 +95,7 @@
 							echo "<tr align='center'> <td colspan='5'><font color='lightblue'> No Friend Requests!</font> </td> </tr>";
 						}
 						
-						MySQLi_Close($res_id);	
+						MySQLi_Close($resid);	
 					}
 				
 			}
@@ -105,7 +106,7 @@
 			
 		</table>
 		<footer align='center'>
-			&copy; All Rights Reserved.	
+			&copy; All Rights Reserved.	https://github.com/abhn/simple-php-mysql-project
 			</footer>
 </body>
 </html>

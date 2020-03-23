@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel='stylesheet' href='page_css.css'>
 	<title> Student's Hangout </title>
 	
@@ -38,6 +39,7 @@
 			
 			<?php
 			//Session_start();
+			$config=parse_ini_file('./private/config.ini');
 			$email=$password=$no_msg="";
 			
 			if(!isset($_SESSION['user_id']) && !isset($_POST['h1'])) {
@@ -63,7 +65,7 @@
 		    $password=$_POST["p1"];
 			}
 			$query="select * from students where email='$email' and password='$password'";
-			$resid=MySQLi_Connect('localhost','root','@connectme','shangout');
+			$resid=MySQLi_Connect($config['servername'],$config['username'],$config['password'],$config['dbname']);
 			if(MySQLi_Connect_Errno()) {
 				echo "<tr align='center'> <td colspan='5'> Failed to connect to MySQL </td> </tr>";
 			}
@@ -152,7 +154,7 @@
 		?>	
 		</table>
 			<footer align='center'>
-			&copy; All Rights Reserved.	<?php if(isset($_SESSION["user_id"])) {echo $_SESSION["name"]; } ?>
+			&copy; All Rights Reserved.	https://github.com/abhn/simple-php-mysql-project <?php if(isset($_SESSION["user_id"])) {echo $_SESSION["name"]; } ?>
 			</footer>
 </body>
 </html>
